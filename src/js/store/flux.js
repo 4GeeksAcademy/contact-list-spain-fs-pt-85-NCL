@@ -1,6 +1,22 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			// Lista de contactos
+			contacts: [
+				// Aquí puedes tener algunos contactos iniciales si lo deseas
+				{
+					name: "John Doe",
+					email: "johndoe@example.com",
+					phone: "123-456-7890",
+					address: "123 Main St"
+				},
+				{
+					name: "Jane Smith",
+					email: "janesmith@example.com",
+					phone: "987-654-3210",
+					address: "456 Oak St"
+				}
+			],
 			demo: [
 				{
 					title: "FIRST",
@@ -15,28 +31,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 			]
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
+			// Ejemplo de función que cambia el color
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
+			// Acción para cargar datos, si fuera necesario
 			loadSomeData: () => {
 				/**
 					fetch().then().then(data => setStore({ "foo": data.bar }))
 				*/
 			},
+			// Acción para cambiar el color
 			changeColor: (index, color) => {
-				//get the store
 				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
 				const demo = store.demo.map((elm, i) => {
 					if (i === index) elm.background = color;
 					return elm;
 				});
-
-				//reset the global store
 				setStore({ demo: demo });
+			},
+
+			// Nueva acción para agregar un nuevo contacto
+			addContact: (newContact) => {
+				const store = getStore();
+				// Agregamos el nuevo contacto a la lista de contactos
+				setStore({
+					contacts: [...store.contacts, newContact]
+				});
 			}
 		}
 	};
