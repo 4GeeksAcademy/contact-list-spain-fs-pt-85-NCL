@@ -7,7 +7,7 @@ const AddContact = () => {
 
     const { store, actions } = useContext(Context)
     let navigate = useNavigate();
-    const { id } = useParams(); //se obtine el id colocado en el layout
+    const { id } = useParams(); 
 
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
@@ -31,7 +31,7 @@ const AddContact = () => {
         } else {
             actions.editContact(id, payload)
         }
-        alert("Se grabo los datos del contacto");
+        alert("Contacto guardado correctamente");
         navigate("/");
         setName("");
         setPhone("");
@@ -78,7 +78,7 @@ const AddContact = () => {
                 </div>
             </form>
 
-            <Link to="/">volver a Contacts</Link>
+            <Link to="/">Back to Contacts</Link>
         </div>
     );
 

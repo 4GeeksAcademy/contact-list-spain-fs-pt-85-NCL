@@ -1,66 +1,115 @@
-const getState = ({ getStore, getActions, setStore }) => {
-	return {
-		store: {
-			// Lista de contactos
-			contacts: [
-				// Aquí puedes tener algunos contactos iniciales si lo deseas
-				{
-					name: "John Doe",
-					email: "johndoe@example.com",
-					phone: "123-456-7890",
-					address: "123 Main St"
-				},
-				{
-					name: "Jane Smith",
-					email: "janesmith@example.com",
-					phone: "987-654-3210",
-					address: "456 Oak St"
-				}
-			],
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
-		},
-		actions: {
-			// Ejemplo de función que cambia el color
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-			// Acción para cargar datos, si fuera necesario
-			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
-			},
-			// Acción para cambiar el color
-			changeColor: (index, color) => {
-				const store = getStore();
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-				setStore({ demo: demo });
-			},
+const getState = ({ getStore, getActions, setStore }) => { 
+    return {
+        store: {
+            listContacts: [] 
+        },
+        actions: {
+            createUser: () => {
+                fetch("https://playground.4geeks.com/contact/agendas/nacho", {
+                    method: "POST",
 
-			// Nueva acción para agregar un nuevo contacto
-			addContact: (newContact) => {
-				const store = getStore();
-				// Agregamos el nuevo contacto a la lista de contactos
-				setStore({
-					contacts: [...store.contacts, newContact]
-				});
-			}
-		}
-	};
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log(data);
+
+                    })
+                    .catch((error) => console.log(error));
+            },
+
+            getInfoContacts: () => {
+                fetch("https://playground.4geeks.com/contact/agendas/4geeks-user/contacts", {
+                    method: "GET"
+                })
+                    .then((response) => {
+                        if (response.status == 404) {
+                            getActions().createUser()
+                        }
+                        if (response.ok) {
+                            return response.json()
+                        }
+                    })
+                    .then((data) => {
+                        if (data) {
+                            setStore({ listContacts: data.contacts })
+                        }
+                    }) 
+                    .catch((error => console.log(error)))
+            },
+
+            addContactToList: (contact) => {
+                const store = getStore();
+                setStore({ ...store, listContacts: [...store.listContacts, contact] })
+            },
+
+            createContact: (payload) => {
+                fetch("https://playground.4geeks.com/contact/agendas/4geeks-user/contacts", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(
+                        payload
+                    ),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log(data);
+                        const actions = getActions(); 
+                        actions.addContactToList(data); 
+                        console.log("Contact added:", data);
+                    })
+                    .catch((error) => console.log(error));
+            },
+            deleteContact: (id) => {
+                fetch(`https://playground.4geeks.com/contact/agendas/4geeks-user/contacts/${id}`, {
+                    method: "DELETE",
+                })
+                    .then((response) => {
+                        console.log(response)
+                        if (response.ok) {
+                            const store = getStore();
+                            const updatedContacts = store.listContacts.filter(contact => contact.id !== id);
+                            setStore({ listContacts: updatedContacts });
+                            console.log(`Contact with ID ${id} deleted`);
+                        } else {
+                            console.log("Error deleting contact");
+                        }
+                    })
+                    .catch((error) => console.log(error));
+            },
+
+            editContact: (id, contact) => {
+                const store = getStore()
+                fetch(`https://playground.4geeks.com/contact/agendas/4geeks-user/contacts/${id}`, {
+                    method: "PUT",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(contact)
+                })
+                    .then((response) => {
+                        if (response.ok) {
+                            return response.json()
+                        }
+                    })
+                    .then((data) => {
+                        if (data) {
+                            const updatedList = store.listContacts.map(contact => {
+                                if (contact.id == id) {
+                                    contact = data
+                                }
+                                return contact
+                            })
+                            setStore({ listContacts: updatedList })
+                        }
+                    })
+                    .catch((error) => console.log(error));
+
+
+            }
+        }
+    }
 };
 
 export default getState;

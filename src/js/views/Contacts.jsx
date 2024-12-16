@@ -1,35 +1,33 @@
-import React from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
+import { Link } from 'react-router-dom'
+import { Context } from "../store/appContext.js";
 import CardContact from "../component/CardContact.jsx";
 
-const contactsData = [
-  {
-    id: 1,
-    name: "John Doe",
-    image: "https://via.placeholder.com/150",
-    description: "Software Developer at ABC Company",
-    updated: "3 minutes ago"
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    image: "https://via.placeholder.com/150",
-    description: "Product Manager at XYZ Company",
-    updated: "1 hour ago"
-  },
-  // Agrega más contactos según sea necesario
-];
+const Contacts = () => {
 
-export const Contacts = () => (
-  <div className="d-flex flex-column align-items-center" style={{ height: "100vh" }}>
-    <h1 className="text-center my-5">Contact List</h1>
-    {contactsData.map((contact) => (
-      <CardContact
-        key={contact.id}
-        name={contact.name}
-        image={contact.image}
-        description={contact.description}
-        updated={contact.updated}
-      />
-    ))}
-  </div>
-);
+    const { store, actions } = useContext(Context)
+    console.log(store.listContacts)
+
+    // useEffect(() => {
+        
+    // }, [])
+
+    return (
+
+        <div className="w-75 mx-auto">
+            <div className="d-flex justify-content-end">
+                <Link to="/AddContact">
+                    <button className="btn btn-success">Add New contact</button>
+                </Link>
+            </div>
+            <ul className="list-group mt-3">
+                {store.listContacts && store.listContacts.length > 0 && store.listContacts.map((contact, index) => {
+                    return (
+                        <CardContact contact={contact} key={index} />
+                    )
+                })}
+            </ul>
+        </div>
+    );
+};
+export default Contacts;
