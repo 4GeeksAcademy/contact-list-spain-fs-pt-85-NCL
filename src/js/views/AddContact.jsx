@@ -21,10 +21,11 @@ const AddContact = () => {
             return null
         }
         const payload = {
-            name: name,
+            full_name: name,
             phone: phone,
             email: email,
-            address: address
+            address: address,
+            agenda_slug: "nacho",
         };
         if (!id) {
             actions.createContact(payload)

@@ -8,10 +8,6 @@ const Contacts = () => {
     const { store, actions } = useContext(Context)
     console.log(store.listContacts)
 
-    // useEffect(() => {
-        
-    // }, [])
-
     return (
 
         <div className="w-75 mx-auto">
