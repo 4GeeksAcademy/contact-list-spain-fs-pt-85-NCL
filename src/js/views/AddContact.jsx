@@ -7,7 +7,7 @@ const AddContact = () => {
 
     const { store, actions } = useContext(Context)
     let navigate = useNavigate();
-    const { id } = useParams(); 
+    const { id } = useParams(); //se obtine el id colocado en el layout
 
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
@@ -21,18 +21,17 @@ const AddContact = () => {
             return null
         }
         const payload = {
-            full_name: name,
+            name: name,
             phone: phone,
             email: email,
-            address: address,
-            agenda_slug: "nacho",
+            address: address
         };
         if (!id) {
             actions.createContact(payload)
         } else {
             actions.editContact(id, payload)
         }
-        alert("Contacto guardado correctamente");
+        alert("Contacto añadido con éxito");
         navigate("/");
         setName("");
         setPhone("");
@@ -52,35 +51,36 @@ const AddContact = () => {
     }, [id, store.listContacts])
 
     return (
-        <div className="container">
-            <h1 className="text-center">{!id ? "Add a New Contact" : `Editing Contact: ${name}`}</h1>
+        <div className="full-height">
+            <div className="container">
+                <h1 className="text-center mb-4">{!id ? "Agrega un nuevo contacto" : `Editando Contacto: ${name}`}</h1>
 
-            <form className="container" onSubmit={guardarContacto}>
+                <form className="container" onSubmit={guardarContacto}>
 
-                <div className="mb-3">
-                    <label htmlFor="formGroupExampleInput1" className="form-label">Full Name</label>
-                    <input type="text" className="form-control" id="formGroupExampleInput1" placeholder="Full name" onChange={(e) => setName(e.target.value)} value={name} required />
+                    <div className="mb-3">
+                        <label htmlFor="formGroupExampleInput1" className="form-label"><b>Nombre Completo</b> </label>
+                        <input type="text" className="form-control" id="formGroupExampleInput1" placeholder="Añadir Nombre Completo" onChange={(e) => setName(e.target.value)} value={name} required />
 
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="formGroupExampleInput2" className="form-label">Email</label>
-                    <input type="text" className="form-control" id="formGroupExampleInput2" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)} value={email} required />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="formGroupExampleInput3" className="form-label">Phone</label>
-                    <input type="text" className="form-control" id="formGroupExampleInput3" placeholder="Enter phone" onChange={(e) => setPhone(e.target.value)} value={phone} required />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="formGroupExampleInput4" className="form-label">Address</label>
-                    <input type="text" className="form-control" id="formGroupExampleInput4" placeholder="Enter address" onChange={(e) => setAddress(e.target.value)} value={address} required />
-                </div>
-                <div className="mb-3">
-                    <button type="submit" className="btn btn-primary" >Save</button>
-                </div>
-            </form>
-
-            <Link to="/">Back to Contacts</Link>
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="formGroupExampleInput2" className="form-label"><b>Email</b></label>
+                        <input type="text" className="form-control" id="formGroupExampleInput2" placeholder="Añadir Email" onChange={(e) => setEmail(e.target.value)} value={email} required />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="formGroupExampleInput3" className="form-label"><b>Teléfono</b></label>
+                        <input type="text" className="form-control" id="formGroupExampleInput3" placeholder="Añadir Teléfono" onChange={(e) => setPhone(e.target.value)} value={phone} required />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="formGroupExampleInput4" className="form-label"><b>Dirección</b></label>
+                        <input type="text" className="form-control" id="formGroupExampleInput4" placeholder="Añadir Dirección" onChange={(e) => setAddress(e.target.value)} value={address} required />
+                    </div>
+                    <div className="mb-3">
+                        <button type="submit" className="btn btn-primary btn-guardar" >Guardar</button>
+                    </div>
+                </form> 
+            <Link to="/">Volver a Contactos</Link>
         </div>
+        </div>   
     );
 
 

@@ -1,3 +1,66 @@
 /* 
     General Styles
 */
+.btn-general {
+
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-weight: bold;
+
+}
+
+.full-height {
+
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+body {
+
+    background-color: white;
+}
+
+input.form-control {
+
+    background-color: whitesmoke;
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 12px;
+
+    
+}
+
+.rounded-circle {
+
+    margin: 10px;
+}
+
+.list-group-item {
+
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 8px;
+}
+
+.black-icon {
+
+    color: black;
+    font-size: 24px;
+}
+
+.icon-button {
+    border: none;
+}
+
+.btn-guardar{
+    width: 100%;
+}
+
+.btn-añadir-contacto{
+   font-size: 18px; 
+   
+
+}

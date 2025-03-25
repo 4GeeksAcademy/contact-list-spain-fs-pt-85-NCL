@@ -9,31 +9,31 @@ const EditContact = () => {
     return (
 
         <div className="container">
-            <h1 className="text-center">Update Contact</h1>
+            <h1 className="text-center">Actualizar Contacto</h1>
 
             <form className="container">
                 <div className="mb-3">
-                    <label for="formGroupExampleInput1" className="form-label">Full Name</label>
-                    <input type="text" className="form-control" id="formGroupExampleInput1" placeholder="Full name" onChange={(e) => setName(e.target.value)} value={name} />
+                    <label for="formGroupExampleInput1" className="form-label">Nombre Completo</label>
+                    <input type="text" className="form-control" id="formGroupExampleInput1" placeholder="Añadir nombre completo" onChange={(e) => setName(e.target.value)} value={name} />
                 </div>
                 <div className="mb-3">
                     <label for="formGroupExampleInput2" className="form-label">Email</label>
-                    <input type="text" className="form-control" id="formGroupExampleInput2" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)} value={email} />
+                    <input type="text" className="form-control" id="formGroupExampleInput2" placeholder="Añadir Email" onChange={(e) => setEmail(e.target.value)} value={email} />
                 </div>
                 <div className="mb-3">
-                    <label for="formGroupExampleInput3" className="form-label">Phone</label>
-                    <input type="text" className="form-control" id="formGroupExampleInput3" placeholder="Enter phone" onChange={(e) => setPhone(e.target.value)} value={phone} />
+                    <label for="formGroupExampleInput3" className="form-label">Teléfono</label>
+                    <input type="text" className="form-control" id="formGroupExampleInput3" placeholder="Añadir Número" onChange={(e) => setPhone(e.target.value)} value={phone} />
                 </div>
                 <div className="mb-3">
-                    <label for="formGroupExampleInput4" className="form-label">Address</label>
-                    <input type="text" className="form-control" id="formGroupExampleInput4" placeholder="Enter address" onChange={(e) => setAddress(e.target.value)} value={address} />
+                    <label for="formGroupExampleInput4" className="form-label">Dirección</label>
+                    <input type="text" className="form-control" id="formGroupExampleInput4" placeholder="Añadir dirección" onChange={(e) => setAddress(e.target.value)} value={address} />
                 </div>
                 <div className="mb-3">
-                    <button type="button" className="btn btn-primary">Update Contact</button>
+                    <button type="button" className="btn btn-primary">Guardar</button>
                 </div>
             </form>
 
-            <Link to="/"><a>volver a Contacts</a></Link>
+            <Link to="/"><a>Volver a Contactos</a></Link>
         </div>
     )
 }
